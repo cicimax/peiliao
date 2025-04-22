@@ -1,22 +1,26 @@
 
 <script setup>
 import {useRouter} from "vue-router";
-
+import {useMenuStore} from '@/store/menu.js'
+const store=useMenuStore()
 const router = useRouter();
 const props = defineProps({
   menuData: {
     type: Array,
     default: null
   },
-  index: {
-    type: Number,
-    default: 0
+  index:{
+    type:String,
+    default:null
   }
 })
-console.log(props.menuData)
 const handleClick = (item, index) => {
-    router.push(item.meta.path)
+    router?.push(item?.meta.path)
+    store?.addMenu(item?.meta)
+
 }
+
+
 </script>
 
 <template>
