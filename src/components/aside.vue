@@ -4,10 +4,12 @@ import {useRouter} from "vue-router";
 import {computed, reactive, watch} from "vue";
 
 const router = useRouter();
-const menuData=reactive(router.options.routes[0].children);
+// const menuData=reactive(router.options.routes[0].children);
+const menuData=computed(()=>store.routerList)
 import {useMenuStore} from '@/store/menu.js'
 const store=useMenuStore()
 const iscollapse=computed(()=>store.isCollapse)
+
 </script>
 
 <template>
@@ -22,6 +24,7 @@ const iscollapse=computed(()=>store.isCollapse)
       :collapse="iscollapse"
       @open=""
       @close=""
+     
   >
     <p class="logo-lg" >{{!iscollapse?'DIDI陪诊':'DIDI'}}</p>
       <tree-menu :menu-data="menuData" :index="`1`"/>

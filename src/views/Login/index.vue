@@ -1,8 +1,8 @@
 <script setup>
-import {ref, reactive, onUnmounted, onMounted} from "vue";
+import {ref, reactive, onUnmounted, onMounted, computed, toRaw} from "vue";
 import {Lock, UserFilled} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
-import {getCode, userAuthentication, Login,userSetMenu} from '@/apis/index.js'
+import {getCode, userAuthentication, Login,menuPermissions} from '@/apis/index.js'
 import {useRouter} from "vue-router";
 const router=useRouter()
 // 表单类型切换
@@ -11,7 +11,8 @@ const toggleFormType = () => {
   formType.value = formType.value ? 0 : 1;
   resetForm();
 };
-
+import {useMenuStore} from "@/store/menu.js";
+const menuStore = useMenuStore();
 // 表单数据
 const loginForm = reactive({
   userName: "",
@@ -25,6 +26,7 @@ const countdown = reactive({
   timer: null
 });
 
+const routeList= computed(()=>menuStore.routerList)
 
 const formRef = ref();
 // 清除定时器
@@ -112,7 +114,7 @@ const submitForm = async (FormEl) => {
  
   if (!FormEl) return
   console.log(FormEl)
-  await FormEl.value.validate((valid) => {
+  await FormEl.validate((valid) => {
     if (valid) {
       if (formType.value) {
         userAuthentication(loginForm).then(({data}) => {
@@ -127,6 +129,15 @@ const submitForm = async (FormEl) => {
             ElMessage.success('登录成功')
             localStorage.setItem('pz_token', data.data.token)
             localStorage.setItem('pz_userInfo', JSON.stringify(data.data.userInfo))
+            menuPermissions().then(({data})=>{
+            menuStore.dynamicMenu(data.data)
+              toRaw(routeList.value).forEach(item=>{
+                console.log(item.component)
+                router.addRoute('main',item)
+             
+            })
+            
+            })
             router.push('/')
           }
         })

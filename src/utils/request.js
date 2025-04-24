@@ -8,7 +8,6 @@ export const request = axios.create(
 );
 request.interceptors.request.use((config)=>{
     let token = localStorage.getItem('pz_token');
-    console.log(config)
     //不需要添加token
     const whiteurl=['/get/code','/user/authentication','/login']
     if(token&&!whiteurl.includes(config.url)){

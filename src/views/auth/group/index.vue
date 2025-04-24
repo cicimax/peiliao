@@ -38,6 +38,7 @@ const rules = reactive({
 })
 const treeRef = ref()
 const formRef = ref()
+
 onMounted(() => {
   userGetMenu().then(({data}) => {
     premissionData.value = data.data
@@ -79,10 +80,12 @@ const handleCurrentChange = (val) => {
 }
 import panelHead from '@/components/panelHead.vue'
 import {Plus} from "@element-plus/icons-vue";
+import {useRoute} from 'vue-router'
+const route=useRoute()
 </script>
 
 <template>
-  <panel-head/>
+  <panel-head :route="route"/>
   <div class="btns">
     <el-button :icon="Plus" type="primary" @click="open(null)" size="small">新增</el-button>
   </div>

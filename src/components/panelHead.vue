@@ -1,15 +1,19 @@
 <script setup>
-
+const prop=defineProps({
+  route:{
+    type: Object,
+  }
+})
 </script>
 
 <template>
 <div class="panel-heading">
   <div class="panel-lead">
     <div class="title">
-     菜单管理
+     {{prop.route.meta.name}}
     </div>
     <p class="description">
-      12334456
+      {{prop.route.meta.describe}}
     </p>
   </div>
 </div>

@@ -22,3 +22,24 @@ export const userSetMenu=(data)=>{
 export const menuList=(params)=>{
     return request({url: '/menu/list', method: 'get',params })
 }
+export const menuSelectList=()=>{
+        return request({url: '/menu/selectlist', method: 'get'})
+}
+export const update=(data)=>{
+    return request({url: '/update/user',method:'post',data})
+}
+export const menuPermissions=()=>{
+    return request({url: '/menu/permissions',method:'get'})
+}
+export const PhotoList=()=>{
+    return request({url: '/photo/list',method:'get'})
+}
+export const companion=(data)=>{
+    return request({url: '/companion',method:'post',data})
+}
+export const companionList=(params)=>{
+    return request({url: '/companion/list',params})
+}
+export const deleteCompanion=(data)=>{
+    return request({url: '/delete/companion',method:'post',data})
+}
